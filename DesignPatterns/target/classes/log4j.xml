@@ -1,0 +1,38 @@
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <appender name="error" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="./logs/error.log" />
+        <param name="MaxBackupIndex" value="5"/>
+		<param name="MaxFileSize" value="10MB"/>
+        <param name="Threshold" value="ERROR" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %C%M:%L %m%n" />
+        </layout>
+    </appender>    
+    
+    <appender name="designPattern" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="./logs/designPattern.log" />
+		<param name="MaxBackupIndex" value="5"/>
+		<param name="MaxFileSize" value="10MB"/>
+        <param name="Threshold" value="info,DEBUG" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %C%M:%L %m%n" />
+        </layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="DEBUG" />
+            <param name="LevelMax" value="info" />
+            <param name="AcceptOnMatch" value="true" />
+        </filter>
+    </appender> 
+
+    <logger name="com.dp" additivity="false">
+        <level value="INFO,DEBUG" />       
+        <appender-ref ref="designPattern" />
+		 <appender-ref ref="error" />
+    </logger>
+	
+    <root>
+	    <level value="ERROR" />
+        <appender-ref ref="error" />
+    </root>
+</log4j:configuration>	
